@@ -1,0 +1,15 @@
+{
+  "name": "url-to-epub",
+  "version": "1.0.0",
+  "description": "A single tool to generate a compliant EPUB from a webpage. Zero config. Requires pandoc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nemo",
+  "license": "MIT",
+  "dependencies": {
+    "article-parser": "^4.1.1",
+    "node-pandoc-promise": "0.0.6"
+  }
+}
