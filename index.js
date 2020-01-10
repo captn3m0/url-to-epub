@@ -1,34 +1,26 @@
-const AP = require('article-parser');
-var nodePandoc = require('node-pandoc-promise');
+#!/usr/bin/env node
+var argv = require("yargs").argv;
+const generateEPUB = require("./generate");
 
-const url = process.argv[2];
- 
-const getArticle = async (url) => {
-  try {
-    const article = await AP.extract(url);
-    return article;
-  } catch (err) {
-    console.trace(err);
-  }
-};
-
-getArticle(url).then(res=>{
-
-`
-<dc:title id="epub-title-1">${res.title}</dc:title>
-<dc:date>${res.published}</dc:date>
-<dc:language>en-US</dc:language>
-<dc:creator id="epub-creator-1" opf:role="aut">${res.author}</dc:creator>
-`
-
-// TODO: Write res.content into a temp file
-
-const imageUrl = res.image
-
-nodePandoc(tmpFile, ['-o', 'filel.epub', '--epbu-cover-image', 'file.png', '--epub-metadata=something.xml'])
-	.then(res=>{
-	  console.log(res);  
-	}).catch(err=>{
-	    console.error('Oh No: ',err);  
-	});
-})
+require("yargs") // eslint-disable-line
+  .usage("$0 --output [output] <url>")
+  .help("h")
+  .command("$0 <url>", "Generate EPUB file from URL", yargs => {
+    yargs
+      .positional("url", {
+        describe: "The URL to download",
+        type: "string"
+      })
+      .option("output", {
+        alias: "o",
+        type: "string",
+        default: "url-to-epub.epub",
+        description: "Output file to save EPUB"
+      })
+      .example(
+        '$0 -o articulated-restraint.epub "https://www.tor.com/2019/02/06/articulated-restraint-mary-robinette-kowal/"'
+      )
+      .demandOption(["url"]);
+  }, (argv) => {
+    generateEPUB(argv.url, argv.output)
+  }).argv;

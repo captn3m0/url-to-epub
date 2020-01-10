@@ -1,15 +1,18 @@
 {
   "name": "url-to-epub",
   "version": "1.0.0",
-  "description": "A single tool to generate a compliant EPUB from a webpage. Zero config. Requires pandoc",
+  "description": "A single tool to generate a standards-compliant EPUB from a webpage. Zero config. Requires pandoc",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "url-to-epub": "./index.js"
   },
   "author": "Nemo",
   "license": "MIT",
   "dependencies": {
     "article-parser": "^4.1.1",
-    "node-pandoc-promise": "0.0.6"
+    "node-downloader-helper": "^1.0.11",
+    "node-pandoc-promise": "0.0.6",
+    "tempfile": "^3.0.0",
+    "yargs": "^15.1.0"
   }
 }
