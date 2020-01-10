@@ -13,11 +13,12 @@ const getArticle = async url => {
   }
 };
 
-module.exports = (url, epubPath) => {
+module.exports = (url, epubPath, language="en-US") => {
   getArticle(url).then(res => {
     let xml = `<dc:title id="epub-title-1">${res.title}</dc:title>
 <dc:date>${res.published}</dc:date>
-<dc:language>en-US</dc:language>
+<dc:language>${language}</dc:language>
+<dc:identifier>${url}</dc:identifier>
 <dc:creator id="epub-creator-1" opf:role="aut">${res.author}</dc:creator>`;
 
     let html = tempFile(".html");
