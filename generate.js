@@ -13,9 +13,12 @@ const getArticle = async url => {
   }
 };
 
-module.exports = (url, epubPath, language="en-US") => {
+module.exports = (url, epubPath, title, coverURL, language="en-US") => {
   getArticle(url).then(res => {
-    let xml = `<dc:title id="epub-title-1">${res.title}</dc:title>
+
+    title = title ? title : res.title;
+
+    let xml = `<dc:title id="epub-title-1">${title}</dc:title>
 <dc:date>${res.published}</dc:date>
 <dc:language>${language}</dc:language>
 <dc:identifier>${url}</dc:identifier>
@@ -26,10 +29,9 @@ module.exports = (url, epubPath, language="en-US") => {
 
     fs.writeFileSync(html, res.content);
     fs.writeFileSync(metadata, xml);
+    const imageUrl = coverURL ? coverURL : res.image;
 
-    const imageUrl = res.image;
-
-    const dl = new DownloaderHelper(res.image, "/tmp", {
+    const dl = new DownloaderHelper(imageUrl, "/tmp", {
       fileName: "epub-to-image.jpg"
     });
 
