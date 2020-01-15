@@ -1,6 +1,6 @@
 {
   "name": "url-to-epub",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A single tool to generate a standards-compliant EPUB from a webpage. Zero config. Requires pandoc",
   "main": "index.js",
   "bin": {
