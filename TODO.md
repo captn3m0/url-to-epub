@@ -7,3 +7,4 @@ General ideas for improvement of the script:
 5. Optionally support <https://github.com/mozilla/readability> instead of article-parser. Mozilla's engine is much better.
 6. Add more EPUB metadata tag support
 7. Pick up the language automatically
+8. Better error message without pandoc

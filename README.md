@@ -1,6 +1,6 @@
 # url-to-epub
 
-![npm](https://img.shields.io/npm/v/url-to-epub?style=flat-square)
+![npm](https://img.shields.io/npm/v/url-to-epub?style=flat-square) ![Docker Build Status](https://img.shields.io/docker/build/captn3m0/url-to-epub?style=flat-square) ![GitHub issues](https://img.shields.io/github/issues/captn3m0/url-to-epub) ![Docker Pulls](https://img.shields.io/docker/pulls/captn3m0/url-to-epub?style=flat-square) ![npm bundle size](https://img.shields.io/bundlephobia/min/url-to-epub?style=flat-square)
 
 A simple script that generates an EPUB from a single URL, taking care for the following:
 
@@ -10,6 +10,10 @@ A simple script that generates an EPUB from a single URL, taking care for the fo
 
 ## Installation
 
+You can either run this script as an NPM package, or as a docker container.
+
+### NPM
+
 You will need `pandoc` and `npm` installed. To install this script globally:
 
 	npm install --global url-to-epub
@@ -17,7 +21,13 @@ You will need `pandoc` and `npm` installed. To install this script globally:
 Please make sure that the global node_modules/bin directory is added to your PATH. 
 You can check that directory by running `npm bin --global`.
 
+### Docker
+
+`docker pull captn3m0/url-to-epub:latest`
+
 ## Usage
+
+### NPM
 
 ```
 url-to-epub <url>
@@ -66,6 +76,12 @@ Examples:
   url-to-epub --title "Articulated Restraint" -o articulated-restraint.epub
   "https://www.tor.com/2019/02/06/articulated-restraint-mary-robinette-kowal/"
 ```
+
+### Docker
+
+    docker run --user $UID  --volume /tmp:/data captn3m0/url-to-epub:latest --output /data/articulated-restraint.epub --cover-url https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1548962694l/43782466._SY475_.jpg  https://www.tor.com/2019/02/06/articulated-restraint-mary-robinette-kowal/
+
+The generated file will be available in `/data/articulated-restraint.epub`.
 
 ## HACKING
 
