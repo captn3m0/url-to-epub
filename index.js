@@ -17,7 +17,7 @@ require("yargs") // eslint-disable-line
                 .option("output", {
                     alias: "o",
                     type: "string",
-                    default: "url-to-epub.epub",
+                    default: false,
                     description: "Output file to save EPUB"
                 })
                 .option("title", {

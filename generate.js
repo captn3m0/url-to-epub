@@ -3,6 +3,8 @@ const tempFile = require("tempfile");
 const nodePandoc = require("node-pandoc-promise");
 const fs = require("fs");
 const { DownloaderHelper } = require("node-downloader-helper");
+const path = require('path');
+const slugify = require('slugify');
 
 const getArticle = async url => {
   try {
@@ -18,11 +20,16 @@ module.exports = (url, epubPath, title, coverURL, language="en-US") => {
 
     title = title ? title : res.title;
 
+    epubPath = epubPath ? epubPath : slugify(path.basename(url)) + '.epub';
+
     let xml = `<dc:title id="epub-title-1">${title}</dc:title>
 <dc:date>${res.published}</dc:date>
 <dc:language>${language}</dc:language>
 <dc:identifier>${url}</dc:identifier>
-<dc:creator id="epub-creator-1" opf:role="aut">${res.author}</dc:creator>`;
+<dc:source>${url}</dc:source>
+<dc:description>${res.description}</dc:description>
+<dc:publisher>${res.source}</dc:publisher>
+<dc:creator opf:role="aut">${res.author}</dc:creator>`;
 
     let html = tempFile(".html");
     let metadata = tempFile(".xml");
@@ -32,7 +39,8 @@ module.exports = (url, epubPath, title, coverURL, language="en-US") => {
     const imageUrl = coverURL ? coverURL : res.image;
 
     const dl = new DownloaderHelper(imageUrl, "/tmp", {
-      fileName: "epub-to-image.jpg"
+      fileName: "epub-to-image.jpg",
+      override: true
     });
 
     dl.start();
