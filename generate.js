@@ -22,8 +22,23 @@ module.exports = (url, epubPath, title, coverURL, language="en-US") => {
 
     epubPath = epubPath ? epubPath : slugify(path.basename(url)) + '.epub';
 
+    let date = new Date(Date.parse(res.published));
+
+
+    function pad(number) {
+      if (number < 10) {
+        return '0' + number;
+      }
+      return number;
+    }
+
+    // Using toISOString() trips Pandoc, which leaves an empty dc:date element instead.
+    let epubDate = date.getUTCFullYear() +
+        '-' + pad(date.getUTCMonth() + 1) +
+        '-' + pad(date.getUTCDate());
+
     let xml = `<dc:title id="epub-title-1">${title}</dc:title>
-<dc:date>${res.published}</dc:date>
+<dc:date>${epubDate}</dc:date>
 <dc:language>${language}</dc:language>
 <dc:identifier>${url}</dc:identifier>
 <dc:source>${url}</dc:source>
